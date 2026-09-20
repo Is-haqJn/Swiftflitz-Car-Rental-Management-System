@@ -1,0 +1,41 @@
+{
+    "files": [],
+    "references": [
+        { "path": "./tsconfig.app.json" },
+        { "path": "./tsconfig.node.json" }
+    ],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@admin/*": ["./src/admin/*"],
+            "@adminComponents/*": ["./src/admin/components/*"],
+            "@adminUtils/*": ["./src/admin/utils/*"],
+            "@adminServices/*": ["./src/admin/services/*"],
+            "@adminAssets/*": ["./src/admin/assets/*"],
+            "@adminHooks/*": ["./src/admin/hooks/*"],
+            "@adminStyles/*": ["./src/admin/styles/*"],
+            "@adminConfig/*": ["./src/admin/config/*"],
+            "@adminTypes/*": ["./src/admin/types/*"],
+            "@adminContext/*": ["./src/admin/context/*"],
+            "@adminRoutes/*": ["./src/admin/routes/*"],
+            "@adminLayouts/*": ["./src/admin/layouts/*"],
+            "@adminPages/*": ["./src/admin/pages/*"],
+            "@adminStore/*": ["./src/admin/store/*"],
+            "@adminApi/*": ["./src/admin/api/*"],
+            "@adminConstants/*": ["./src/admin/constants/*"]
+        },
+        //        "jsx": "react-jsx",
+        //        "esModuleInterop": false,
+        //        "target": "ESNext",
+        //        "module": "ESNext",
+        //        "moduleResolution": "bundler",
+        "noImplicitAny": true, //? Turn off implicit any to allow for more flexible coding style
+        "noUnusedParameters": false, //? Allow unused parameters to avoid unnecessary warnings during development
+        "skipLibCheck": true,
+        "allowJs": true,
+        "noUnusedLocals": false,
+        "strictNullChecks": false,
+        "verbatimModuleSyntax": false
+    }
+}
