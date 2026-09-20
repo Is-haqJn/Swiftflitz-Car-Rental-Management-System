@@ -15,6 +15,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'developer' => env('APP_DEVELOPER', 'Ordaq Tech Solutions'),
+
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:5173'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -53,6 +57,10 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+
+    'frontend_url' => env('FRONTEND_URL', 'http://localhost:5173'),
+
+    'admin_url' => env('ADMIN_URL', env('FRONTEND_URL', 'http://localhost:5173')),
 
     /*
     |--------------------------------------------------------------------------

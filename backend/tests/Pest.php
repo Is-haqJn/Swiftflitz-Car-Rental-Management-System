@@ -45,3 +45,15 @@ function something()
 {
     // ..
 }
+
+/**
+ * Create a super_admin user that passes all policy checks via Gate::before.
+ */
+function adminUser(): \App\Models\User
+{
+    $user = \App\Models\User::factory()->create();
+    $role = \Spatie\Permission\Models\Role::findOrCreate('super_admin');
+    $user->assignRole($role);
+
+    return $user;
+}

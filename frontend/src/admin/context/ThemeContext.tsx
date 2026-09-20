@@ -253,6 +253,7 @@ export const ThemeContextProvider = (props: ThemeContextProviderProps) => {
         if (!body) return;
         body.setAttribute('data-theme-version', name.value);
         setBackground(name);
+        localStorage.setItem('swiftflitz:theme', name.value);
     };
 
     const changeContainerPosition = (name: {
@@ -317,7 +318,11 @@ export const ThemeContextProvider = (props: ThemeContextProviderProps) => {
         const body = document.querySelector('body');
         if (!body) return;
         body.setAttribute('data-typography', 'poppins');
-        body.setAttribute('data-theme-version', 'light');
+        const savedTheme = localStorage.getItem('swiftflitz:theme');
+        body.setAttribute(
+            'data-theme-version',
+            savedTheme === 'dark' ? 'dark' : 'light'
+        );
         body.setAttribute('data-layout', 'vertical');
         body.setAttribute('data-primary', 'color_1');
         body.setAttribute('data-nav-headerbg', 'color_1');
@@ -395,6 +400,7 @@ export const ThemeContextProvider = (props: ThemeContextProviderProps) => {
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useThemeContext = (): ThemeContextType => {
     const context = useContext(ThemeContext);
     if (!context) {

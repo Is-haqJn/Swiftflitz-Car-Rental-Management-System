@@ -1,0 +1,8 @@
+{
+    "preset": "laravel",
+    "disabled": [],
+    "excluded": [
+        "config/database.php",
+        "config/permission.php"
+    ]
+}

@@ -1,15 +1,114 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useConfirm } from '@/shared/hooks/useConfirm';
+import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 // import { IMAGES, SVGICON } from "../../constant/theme";
 import { SVGICON } from '@adminConstants/theme';
 import { LuSunMoon, LuSunMedium } from 'react-icons/lu';
-import { ROUTES } from '@/shared/routes/routes';
+import { ROUTES } from '@/shared/routes';
 import { useThemeContext } from '@/admin/context/ThemeContext';
+import { useAppSelector, useAppDispatch, persistor } from '@/store';
+import { selectAuthUser } from '@/store/slices/authSlice';
+import {
+    selectActiveBranchId,
+    setActiveBranch,
+    clearActiveBranch,
+} from '@/store/slices/activeBranchSlice';
+import type { Branch } from '@/shared/types/branch.types';
+import { LogoutButton } from '../../common/LogoutButton';
+import {
+    useUnreadCount,
+    useNotifications,
+    useMarkAsRead,
+} from '@/shared/hooks/queries/useNotifications';
+import { VscHome, VscLock } from 'react-icons/vsc';
+import { tokenManager } from '@/shared/config/tokenManager';
+import { formatTimeAgo } from '@/shared/libs/utils';
 // import fscreen from "fscreen";
 
-const IMAGES = {
-    image_sample: 'https://picsum.photos/200',
-};
+function BranchSelector({ branches }: { branches: Branch[] }) {
+    const dispatch = useAppDispatch()();
+    const activeBranchId = useAppSelector(selectActiveBranchId);
+    const user = useAppSelector(selectAuthUser);
+    const isAdmin = (user?.roles ?? []).some(r =>
+        ['super_admin', 'admin'].includes(r)
+    );
+
+    useEffect(() => {
+        /* After stop-impersonation reload: skip auto-select to prevent stale branch re-set */
+        if (sessionStorage.getItem('swiftflitz:stop_impersonation')) return;
+        /* Single-branch users (non-admin): auto-select their only branch */
+        if (branches.length === 1 && activeBranchId === null && !isAdmin) {
+            dispatch(setActiveBranch(branches[0].id));
+        }
+    }, [activeBranchId, branches, dispatch, isAdmin]);
+
+    return (
+        <li className="nav-item d-flex align-items-center me-2">
+            <select
+                className="form-select form-select-sm"
+                style={{ minWidth: 160, maxWidth: 220 }}
+                value={activeBranchId ?? ''}
+                onChange={e => {
+                    if (e.target.value === '') {
+                        dispatch(clearActiveBranch());
+                    } else {
+                        dispatch(setActiveBranch(e.target.value));
+                    }
+                }}
+            >
+                <option value="">All Branches</option>
+                {branches.map(b => (
+                    <option key={b.id} value={b.id}>
+                        {b.name}
+                        {b.currency ? ` · ${b.currency}` : ''}
+                    </option>
+                ))}
+            </select>
+        </li>
+    );
+}
+
+function UserAvatar({
+    name,
+    photoUrl,
+    size = 36,
+}: {
+    name: string;
+    photoUrl?: string | null;
+    size?: number;
+}) {
+    if (photoUrl) {
+        return (
+            <img
+                src={photoUrl}
+                alt={name}
+                width={size}
+                height={size}
+                style={{ borderRadius: '50%', objectFit: 'cover' }}
+            />
+        );
+    }
+    return (
+        <div
+            style={{
+                width: size,
+                height: size,
+                borderRadius: '50%',
+                background: '#6c757d',
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 600,
+                fontSize: size * 0.4,
+                flexShrink: 0,
+            }}
+        >
+            {name.charAt(0).toUpperCase()}
+        </div>
+    );
+}
 
 type HeaderType = {
     onNote?: () => void;
@@ -21,7 +120,73 @@ type HeaderType = {
     onClick?: () => void;
 };
 
-function Header({}: HeaderType = {}) {
+// eslint-disable-next-line no-empty-pattern
+function Header({}: HeaderType) {
+    const user = useAppSelector(selectAuthUser);
+    const dispatch = useAppDispatch()();
+    const activeBranchId = useAppSelector(selectActiveBranchId);
+    const navigate = useNavigate();
+
+    const branches = user?.branches ?? [];
+    const isAdminUser = (user?.roles ?? []).some(r =>
+        ['super_admin', 'admin'].includes(r)
+    );
+
+    // Remove stop-impersonation guard once the real admin profile is confirmed
+    useEffect(() => {
+        if (isAdminUser) {
+            sessionStorage.removeItem('swiftflitz:stop_impersonation');
+        }
+    }, [isAdminUser]);
+
+    // Auto-init active branch for single-branch non-admin users on mount
+    useEffect(() => {
+        if (sessionStorage.getItem('swiftflitz:stop_impersonation')) return;
+        if (branches.length === 1 && !activeBranchId && !isAdminUser) {
+            dispatch(setActiveBranch(branches[0].id));
+        }
+    }, [branches, activeBranchId, dispatch, isAdminUser]);
+
+    // Clear stale activeBranchId when the user changes (e.g. after stopping impersonation).
+    // If the stored branch doesn't exist in the current user's branch list, discard it.
+    useEffect(() => {
+        if (activeBranchId) {
+            const isValid = branches.some(b => b.id === activeBranchId);
+            if (!isValid) {
+                dispatch(clearActiveBranch());
+            }
+        }
+    }, [branches, activeBranchId, dispatch]);
+
+    const { data: unreadData } = useUnreadCount();
+    const { data: recentData } = useNotifications({ per_page: 5 });
+    const markAsRead = useMarkAsRead();
+
+    const unreadCount = unreadData?.data?.count ?? 0;
+    const recentNotifications = recentData?.data ?? [];
+
+    const isImpersonating = tokenManager.isImpersonating();
+    const originalUserName = tokenManager.getOriginalUserName();
+
+    const { confirm } = useConfirm();
+
+    const handleStopImpersonation = async () => {
+        const ok = await confirm({
+            title: 'Stop Impersonation?',
+            message: `Return to ${originalUserName ?? 'your account'}?`,
+            confirmText: 'Yes, Return',
+            confirmVariant: 'primary',
+        });
+        if (!ok) return;
+        /* restore original admin token first, then nuke all persisted Redux state.
+           on reload useCurrentUser fires (token exists), fetches the admin user,
+           and ProtectedRoute shows a skeleton until the response arrives. */
+        tokenManager.stopImpersonation();
+        sessionStorage.setItem('swiftflitz:stop_impersonation', '1');
+        await persistor.purge();
+        window.location.href = ROUTES.DASHBOARD.USERS.ROOT;
+    };
+
     const { background, changeBackground } = useThemeContext();
     const handleThemeMode = () => {
         if (!changeBackground) return;
@@ -48,6 +213,9 @@ function Header({}: HeaderType = {}) {
                         <div className="collapse navbar-collapse justify-content-between">
                             <div className="header-left">
                                 <ul className="navbar-nav header-left">
+                                    {branches.length > 0 && (
+                                        <BranchSelector branches={branches} />
+                                    )}
                                     {/*<li className="nav-item d-flex align-items-center">
 										<div className="input-group search-area">
 											<span className="input-group-text pe-2"><Link to={"#"}><i className="flaticon-search-interface-symbol" /></Link></span>
@@ -63,6 +231,29 @@ function Header({}: HeaderType = {}) {
                                 </ul>
                             </div>
                             <ul className="navbar-nav header-right">
+                                {/* Stop Impersonation - only visible when impersonating */}
+                                {isImpersonating && (
+                                    <li className="nav-item">
+                                        <button
+                                            className="nav-link btn btn-link p-0 tw:text-warning"
+                                            title={`Return to ${originalUserName ?? 'your account'}`}
+                                            onClick={handleStopImpersonation}
+                                        >
+                                            <VscLock size={22} />
+                                        </button>
+                                    </li>
+                                )}
+                                {/* Go to Home */}
+                                <li className="nav-item">
+                                    <Link
+                                        title={'Visit Home'}
+                                        className="nav-link"
+                                        to={ROUTES.FRONTEND.HOME}
+                                        target="_blank"
+                                    >
+                                        <VscHome size={24} />
+                                    </Link>
+                                </li>
                                 <li className="nav-item dropdown notification_dropdown">
                                     {/*<Link className="nav-link dz-fullscreen" to={"#"} onClick={handleFullscreenToggle}> {SVGICON.fullscreen} </Link>*/}
                                     {/* Handle theme switch moon -sun icons*/}
@@ -91,10 +282,13 @@ function Header({}: HeaderType = {}) {
                                         aria-expanded="false"
                                     >
                                         {SVGICON.notification}
-                                        <span className="badge text-white bg-danger">
-                                            2
-                                        </span>
-                                        {/*Notification*/}
+                                        {unreadCount > 0 && (
+                                            <span className="badge text-white bg-danger">
+                                                {unreadCount > 99
+                                                    ? '99+'
+                                                    : unreadCount}
+                                            </span>
+                                        )}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu
                                         align="end"
@@ -103,55 +297,68 @@ function Header({}: HeaderType = {}) {
                                         <div
                                             id="DZ_W_Notification1"
                                             className="widget-media ic-scroll p-3"
-                                            // style={{ height: "380px" }}
                                             style={{ height: 'auto' }}
                                         >
                                             <ul className="timeline">
-                                                <li>
-                                                    <div className="timeline-panel">
-                                                        <div className="media me-2">
-                                                            <img
-                                                                alt="image"
-                                                                width="50"
-                                                                src={
-                                                                    IMAGES.image_sample
-                                                                }
-                                                            />
+                                                {recentNotifications.length ===
+                                                0 ? (
+                                                    <li>
+                                                        <div className="timeline-panel text-muted text-center py-2">
+                                                            No notifications
                                                         </div>
-                                                        <div className="media-body">
-                                                            <h6 className="mb-1">
-                                                                New Quote
-                                                                Requested
-                                                            </h6>
-                                                            <small className="d-block">
-                                                                03 Feb 2025 -
-                                                                02:26 PM
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div className="timeline-panel">
-                                                        <div className="media me-2 media-info">
-                                                            KG
-                                                        </div>
-                                                        <div className="media-body">
-                                                            <h6 className="mb-1">
-                                                                New Customer
-                                                                Registered
-                                                            </h6>
-                                                            <small className="d-block">
-                                                                03 Feb 2025 -
-                                                                02:26 PM
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
+                                                ) : (
+                                                    recentNotifications.map(
+                                                        n => (
+                                                            <li key={n.id}>
+                                                                <div
+                                                                    className={`timeline-panel${!n.read_at ? ' fw-semibold' : ''}`}
+                                                                    style={{
+                                                                        cursor: 'pointer',
+                                                                    }}
+                                                                    onClick={() => {
+                                                                        if (
+                                                                            !n.read_at
+                                                                        ) {
+                                                                            markAsRead.mutate(
+                                                                                n.id
+                                                                            );
+                                                                        }
+                                                                        const dest =
+                                                                            n.action_url ||
+                                                                            ROUTES.DASHBOARD.NOTIFICATIONS.VIEW(
+                                                                                n.id
+                                                                            );
+                                                                        navigate(
+                                                                            dest
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    <div className="media-body">
+                                                                        <h6 className="mb-1">
+                                                                            {
+                                                                                n.title
+                                                                            }
+                                                                        </h6>
+                                                                        <small className="d-block text-muted">
+                                                                            {formatTimeAgo(
+                                                                                n.created_at
+                                                                            )}
+                                                                        </small>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        )
+                                                    )
+                                                )}
                                             </ul>
                                         </div>
                                         <Link
                                             className="all-notification"
-                                            to={'#'}
+                                            to={
+                                                ROUTES.DASHBOARD.NOTIFICATIONS
+                                                    .ROOT
+                                            }
                                         >
                                             See all notifications{' '}
                                             <i className="ti-arrow-end"></i>
@@ -166,14 +373,14 @@ function Header({}: HeaderType = {}) {
                                         role="button"
                                         data-bs-toggle="dropdown"
                                     >
-                                        <img
-                                            src={IMAGES.image_sample}
-                                            width="20"
-                                            alt="user"
+                                        <UserAvatar
+                                            name={user?.name || 'A'}
+                                            photoUrl={user?.profile_photo_url}
+                                            size={32}
                                         />
                                         <div className="header-info ms-3">
                                             <span className="fs-14 font-w600 mb-0">
-                                                Swiftflitz
+                                                {user?.name || 'Admin User'}
                                             </span>
                                         </div>
                                         {SVGICON.threeline}
@@ -182,22 +389,29 @@ function Header({}: HeaderType = {}) {
                                         <div className="card-body p-0">
                                             <div className="d-flex profile-media justify-content-between align-items-center">
                                                 <div className="d-flex align-items-center">
-                                                    <img
-                                                        src={
-                                                            IMAGES.image_sample
+                                                    <UserAvatar
+                                                        name={user?.name || 'A'}
+                                                        photoUrl={
+                                                            user?.profile_photo_url
                                                         }
-                                                        alt="img"
+                                                        size={48}
                                                     />
                                                     <div className="ms-3">
                                                         <h4 className="mb-0">
-                                                            Swiftflitz
+                                                            {user?.name ||
+                                                                'Admin User'}
                                                         </h4>
                                                         <p className="mb-0">
-                                                            info@ordaq.com
+                                                            {user?.email ||
+                                                                'info@ordaq.com'}
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <Link to="/edit-profile">
+                                                <Link
+                                                    to={
+                                                        ROUTES.DASHBOARD.PROFILE
+                                                    }
+                                                >
                                                     <div className="icon-box">
                                                         {' '}
                                                         {SVGICON.edit}{' '}
@@ -210,6 +424,7 @@ function Header({}: HeaderType = {}) {
                                                         <Link
                                                             to={
                                                                 ROUTES.DASHBOARD
+                                                                    .PROFILE
                                                             }
                                                         >
                                                             <div className="icon-box-lg">
@@ -225,27 +440,33 @@ function Header({}: HeaderType = {}) {
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <div className="icon-box-lg">
+                                                        <Link
+                                                            to={
+                                                                ROUTES.DASHBOARD
+                                                                    .PROFILE_NOTIFICATION_PREFERENCES
+                                                            }
+                                                            className="icon-box-lg"
+                                                        >
                                                             {' '}
                                                             {
                                                                 SVGICON.setting
                                                             }{' '}
                                                             <p>Settings</p>{' '}
-                                                        </div>
+                                                        </Link>
                                                     </li>
                                                     <li>
-                                                        <Link to={ROUTES.LOGIN}>
-                                                            <div className="icon-box-lg">
-                                                                {' '}
-                                                                {
-                                                                    SVGICON.logout
-                                                                }{' '}
-                                                                <p>
-                                                                    {' '}
-                                                                    Logout{' '}
-                                                                </p>{' '}
-                                                            </div>
-                                                        </Link>
+                                                        <LogoutButton
+                                                            className="icon-box-lg"
+                                                            confirmBeforeLogout={
+                                                                true
+                                                            }
+                                                        >
+                                                            {' '}
+                                                            {
+                                                                SVGICON.logout
+                                                            }{' '}
+                                                            <p> Logout </p>{' '}
+                                                        </LogoutButton>
                                                     </li>
                                                 </ul>
                                             </div>

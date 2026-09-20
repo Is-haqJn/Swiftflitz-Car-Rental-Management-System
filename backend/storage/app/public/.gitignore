@@ -1,2 +1,6 @@
 *
 !.gitignore
+!site-content/
+!site-content/**
+site-content/**/conversions
+site-content/**/conversions/**

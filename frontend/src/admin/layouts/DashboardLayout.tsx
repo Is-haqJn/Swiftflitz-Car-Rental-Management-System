@@ -10,8 +10,8 @@ import '@adminAssets/index.css';
 // import 'swiper/css/free-mode';
 // import 'swiper/css/thumbs';
 import '@adminAssets/css/style.css';
-import { Helmet } from '@dr.pogodin/react-helmet';
 import { useThemeContext } from '../context/ThemeContext';
+import { useTitle } from '@/shared/hooks';
 // import 'lightgallery/css/lightgallery.css';
 // import 'lightgallery/css/lg-zoom.css';
 // import 'lightgallery/css/lg-thumbnail.css';
@@ -24,10 +24,11 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+    const title = useTitle('Dashboard');
     const { menuToggle, sidebariconHover } = useThemeContext() || {};
     return (
         <>
-            <Helmet title={'Swiftflitz Dashboard'} />
+            {title}
             <div
                 id="main-wrapper"
                 className={`show ${sidebariconHover ? 'iconhover-toggle' : ''} ${menuToggle ? 'menu-toggle' : ''}`}

@@ -35588,4 +35588,18 @@ input[type=date]::-webkit-calendar-picker-indicator {
   color: #fff;
 }
 
+/* Custom Report Card Styles */
+.hover-shadow-lg {
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.hover-shadow-lg:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
 /*# sourceMappingURL=style.css.map */

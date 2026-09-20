@@ -1,0 +1,40 @@
+/backup
+.well-known/
+.env
+.idea/
+.vscode/
+node_modules/
+.junie/
+.mcp.json
+*.md
+!README.md
+!GRAPH_REPORT.md
+!/AGENTS.md
+!/CLAUDE.md
+!/GEMINI.md
+!HU*L.md
+!Im*m.md
+!Di*.md
+!/CONTEXT.md
+!/CONVERSATION.md
+memory/
+templates/
+!.claude/**/*.md
+.claude/*.json
+*collection.json
+RQ*.json
+
+graphify-out/cache/
+graphify-out/manifest.json
+graphify-out/cost.json 
+graphify-out/.graphify_*
+graphify-out/graph.json
+.graphify_python
+
+# Exception: Track all .md files inside the docs directory (overrides the global *.md ignore)
+!docs/**/*.md
+
+# ignore docs except for the digrams dir in docs excepts sprints and .docx
+docs/*md
+# Ignore .docx files in the docs directory
+docs/**/*.docx

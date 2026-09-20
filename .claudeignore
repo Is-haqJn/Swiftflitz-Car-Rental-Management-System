@@ -1,0 +1,11 @@
+node_modules/
+vendor/
+dist/
+build/
+*.lock
+storage/logs/
+storage/framework/
+public/build/
+*.min.js
+*.min.css
+.next/

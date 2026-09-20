@@ -43,3 +43,58 @@
 [x-cloak] {
     display: none;
 }
+
+/* Terms & Conditions rich text content */
+.twm-terms-content h1,
+.twm-terms-content h2,
+.twm-terms-content h3,
+.twm-terms-content h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+.twm-terms-content h1 {
+    font-size: 2rem;
+}
+.twm-terms-content h2 {
+    font-size: 1.5rem;
+}
+.twm-terms-content h3 {
+    font-size: 1.25rem;
+}
+.twm-terms-content p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+.twm-terms-content ul,
+.twm-terms-content ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+.twm-terms-content ul {
+    list-style-type: disc;
+}
+.twm-terms-content ol {
+    list-style-type: decimal;
+}
+.twm-terms-content li {
+    margin-bottom: 0.35rem;
+    line-height: 1.7;
+}
+.twm-terms-content blockquote {
+    border-left: 4px solid #e0e0e0;
+    padding-left: 1rem;
+    color: #666;
+    margin: 1rem 0;
+}
+.twm-terms-content hr {
+    margin: 2rem 0;
+    border-color: #e0e0e0;
+}
+.twm-terms-content strong {
+    font-weight: 700;
+}
+.twm-terms-content em {
+    font-style: italic;
+}

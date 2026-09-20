@@ -1,0 +1,114 @@
+/* Shared booking calendar - used on vehicle detail + chauffeur pages */
+
+.sf-datepicker-input {
+    cursor: pointer;
+    background-color: #fff !important;
+}
+
+.sf-booking-calendar {
+    font-family: inherit;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+}
+
+/* Header */
+.sf-booking-calendar .react-datepicker__header {
+    background: #126dff;
+    border-bottom: none;
+    padding: 14px 8px 10px;
+}
+
+.sf-booking-calendar .react-datepicker__current-month {
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+.sf-booking-calendar .react-datepicker__day-name {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 2rem;
+}
+
+/* Nav arrows */
+.sf-booking-calendar .react-datepicker__navigation-icon::before {
+    border-color: #fff;
+}
+
+.sf-booking-calendar
+    .react-datepicker__navigation:hover
+    .react-datepicker__navigation-icon::before {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Day cells */
+.sf-booking-calendar .react-datepicker__day {
+    width: 2rem;
+    line-height: 2rem;
+    border-radius: 50%;
+    font-size: 13px;
+    color: #333;
+    transition:
+        background 0.15s,
+        color 0.15s;
+}
+
+.sf-booking-calendar
+    .react-datepicker__day:hover:not(.react-datepicker__day--disabled) {
+    background: #e8f0ff;
+    border-radius: 50%;
+}
+
+/* Today highlight */
+.sf-booking-calendar .react-datepicker__day--today {
+    font-weight: 700;
+    color: #126dff;
+    background: transparent;
+}
+
+/* Selected (start/end) */
+.sf-booking-calendar .react-datepicker__day--selected,
+.sf-booking-calendar .react-datepicker__day--range-start,
+.sf-booking-calendar .react-datepicker__day--range-end {
+    background: #126dff !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+    font-weight: 700;
+}
+
+/* Range in-between */
+.sf-booking-calendar .react-datepicker__day--in-range {
+    background: #deeaff;
+    color: #126dff;
+    border-radius: 0;
+}
+
+.sf-booking-calendar .react-datepicker__day--in-selecting-range {
+    background: #e8f0ff;
+    border-radius: 0;
+}
+
+/* Past / before-minDate / excluded-interval days - greyed out, unclickable */
+.sf-booking-calendar .react-datepicker__day--disabled {
+    color: #bbb !important;
+    background-color: #f5f5f5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    opacity: 0.6 !important;
+    text-decoration: line-through !important;
+}
+
+/* Month container padding */
+.sf-booking-calendar .react-datepicker__month {
+    padding: 6px 8px 12px;
+}
+
+/* Triangle/arrow hidden via JS prop but ensure clean */
+.sf-booking-calendar .react-datepicker__triangle {
+    display: none;
+}

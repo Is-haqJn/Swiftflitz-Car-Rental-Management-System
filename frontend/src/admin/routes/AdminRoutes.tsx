@@ -1,29 +1,84 @@
-import { ROUTES } from '@/shared/routes/routes';
+import { lazy, Suspense } from 'react';
 import DashboardLayout from '@adminLayouts/DashboardLayout';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { ProtectedRoute } from './ProtectedRoute';
+import { PERMISSIONS } from '@/shared/config/permissions';
+import { AppBootSkeleton } from '@adminComponents/skeletons/AppBootSkeleton';
+
+import { UserRoutes } from './userRoutes';
+import { VehicleRoutes } from './vehicleRoutes';
+import { CustomerRoutes } from './customerRoutes';
+import { NotificationRoutes } from './notificationRoutes';
+import { ReportRoutes } from './reportRoutes';
+import { SettingsRoutes } from './settingsRoutes';
+import { BranchRoutes } from './branchRoutes';
+import { RentalsRoutes } from './rentalsRoutes';
+import { DiscountRoutes } from './discountRoutes';
+import { CouponRoutes } from './couponRoutes';
+import { DriverRoutes } from './driverRoutes';
+import { FleetVehicleRoutes } from './fleetVehicleRoutes';
+import { AirportTransferRoutes } from './airportTransferRoutes';
+import { ChauffeurRentalRoutes } from './chauffeurRentalRoutes';
+import { FinanceRoutes } from './financeRoutes';
+
+const Dashboard = lazy(() => import('@adminPages/dashboard/Dashboard'));
+const Profile = lazy(() => import('@adminPages/profile/Profile'));
+const NotificationPreferences = lazy(() => import('@adminPages/profile/NotificationPreferences'));
+const AllExports = lazy(() => import('@adminPages/exports/AllExports'));
 
 export const AdminRoutes = () => {
     return (
-        <DashboardLayout>
-            <Routes>
-                <Route
-                    index
-                    element={
-                        <div className="tw-text-primary tw:text-primary tw-text-2xl tw:text-2xl tw-font-bold">
-                            Welcome to the Management Dashboard
-                            <Link
-                                to={ROUTES.LOGIN}
-                                className="tw:ml-4 tw:text-blue-500"
-                            >
-                                Go to Login Page
-                            </Link>
-                        </div>
-                    }
-                />
+        <ProtectedRoute>
+            <DashboardLayout>
+                <Suspense fallback={<AppBootSkeleton />}>
+                    <Routes>
+                        {/* Dashboard */}
+                        <Route
+                            path="dashboard"
+                            index
+                            element={
+                                <ProtectedRoute
+                                    permission={PERMISSIONS.DASHBOARD.VIEW}
+                                >
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            }
+                        />
 
-                {/* Users*/}
-                <Route path="users" element={<div> Users Page </div>} />
-            </Routes>
-        </DashboardLayout>
+                        {/* Profile */}
+                        <Route path="profile" element={<Profile />} />
+                        <Route
+                            path="profile/notification-preferences"
+                            element={<NotificationPreferences />}
+                        />
+
+                        {/* Exports */}
+                        <Route path="exports">
+                            <Route index element={<AllExports />} />
+                        </Route>
+
+                        {/* Domain Route Modules */}
+                        {UserRoutes()}
+                        {VehicleRoutes()}
+                        {CustomerRoutes()}
+                        {NotificationRoutes()}
+                        {ReportRoutes()}
+                        {SettingsRoutes()}
+                        {BranchRoutes()}
+                        {RentalsRoutes()}
+                        {DiscountRoutes()}
+                        {CouponRoutes()}
+                        {DriverRoutes()}
+                        {FleetVehicleRoutes()}
+                        {AirportTransferRoutes()}
+                        {ChauffeurRentalRoutes()}
+                        {FinanceRoutes()}
+
+                        {/* Fallback 404 */}
+                        <Route path="*" element={<Navigate to="/404" replace />} />
+                    </Routes>
+                </Suspense>
+            </DashboardLayout>
+        </ProtectedRoute>
     );
 };

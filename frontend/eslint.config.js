@@ -23,7 +23,7 @@ export default defineConfig([
         },
         rules: {
             '@typescript-eslint/no-explicit-any': 'error',
-            // 'react-refresh/only-export-components': 'warn',
+            'react-refresh/only-export-components': 'warn',
         },
     },
 ]);

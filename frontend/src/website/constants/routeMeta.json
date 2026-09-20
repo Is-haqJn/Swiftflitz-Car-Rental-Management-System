@@ -1,0 +1,88 @@
+[
+    {
+        "path": "/",
+        "title": "Swiftflitz - Fast & Reliable Car Rentals",
+        "description": "Experience the fastest and most reliable car rental services with Swiftflitz. Browse our fleet and book online today.",
+        "keywords": "car rental, swiftflitz, rent a car, fast car rentals, reliable"
+    },
+    {
+        "path": "/listings",
+        "title": "Car Listings - Swiftflitz Car Rentals",
+        "description": "Browse our wide selection of vehicles available for rent. Find the perfect car for your journey.",
+        "keywords": "car listings, vehicles for rent, SUV rental, sedan rental"
+    },
+    {
+        "path": "/about",
+        "title": "About Us - Swiftflitz Car Rentals",
+        "description": "Learn about Swiftflitz, our mission, and the team behind Ghana's trusted car rental service.",
+        "keywords": "about swiftflitz, car rental company, our story"
+    },
+    {
+        "path": "/services",
+        "title": "Our Services - Swiftflitz Car Rentals",
+        "description": "Explore the full range of car rental services offered by Swiftflitz, from daily hire to long-term leasing.",
+        "keywords": "car rental services, vehicle hire, swiftflitz services"
+    },
+    {
+        "path": "/chauffeur-services",
+        "title": "Chauffeur Services - Swiftflitz Car Rentals",
+        "description": "Professional chauffeur-driven car hire for business travel, airport transfers, and special occasions.",
+        "keywords": "chauffeur service, driver hire, airport transfer, professional driver"
+    },
+    {
+        "path": "/airport-transfer",
+        "title": "Airport Transfer - Swiftflitz Car Rentals",
+        "description": "Reliable and comfortable airport transfer services. Book a vehicle for stress-free arrivals and departures.",
+        "keywords": "airport transfer, airport pickup, airport drop-off, swiftflitz airport"
+    },
+    {
+        "path": "/faqs",
+        "title": "FAQs - Swiftflitz Car Rentals",
+        "description": "Answers to frequently asked questions about renting with Swiftflitz.",
+        "keywords": "car rental FAQ, rental questions, swiftflitz help"
+    },
+    {
+        "path": "/contact",
+        "title": "Contact Us - Swiftflitz Car Rentals",
+        "description": "Get in touch with the Swiftflitz team. We're here to help with bookings, inquiries, and support.",
+        "keywords": "contact swiftflitz, car rental support, book a car"
+    },
+    {
+        "path": "/quote-request",
+        "title": "Request a Quote - Swiftflitz Car Rentals",
+        "description": "Submit a quote request for your next car rental. Tell us your dates and vehicle preference and we'll get back to you quickly.",
+        "keywords": "request quote, car rental quote, swiftflitz quote"
+    },
+    {
+        "path": "/terms",
+        "title": "Terms & Conditions - Swiftflitz Car Rentals",
+        "description": "Read the Swiftflitz terms and conditions for vehicle rentals and use of our services.",
+        "keywords": "rental terms, car hire conditions, swiftflitz policy"
+    },
+    {
+        "path": "/privacy",
+        "title": "Privacy Policy - Swiftflitz Car Rentals",
+        "description": "How Swiftflitz collects, uses, and protects your personal information.",
+        "keywords": "privacy policy, data protection, swiftflitz privacy"
+    },
+    {
+        "path": "/403",
+        "title": "403 Access Denied - Swiftflitz",
+        "description": "You do not have permission to view this page."
+    },
+    {
+        "path": "/404",
+        "title": "404 Page Not Found - Swiftflitz",
+        "description": "The page you were looking for could not be found."
+    },
+    {
+        "path": "/500",
+        "title": "500 Server Error - Swiftflitz",
+        "description": "Something went wrong on our end. Please try again later."
+    },
+    {
+        "path": "/503",
+        "title": "503 Service Unavailable - Swiftflitz",
+        "description": "The service is temporarily unavailable. Please check back shortly."
+    }
+]

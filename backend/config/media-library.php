@@ -10,9 +10,10 @@ return [
 
     /*
      * The maximum file size of an item in bytes.
-     * Adding a larger file will result in an exception.
+     * Set to PHP_INT_MAX to disable - TUS upload handlers enforce
+     * per-entity-type limits before files ever reach MediaLibrary.
      */
-    'max_file_size' => 1024 * 1024 * 10, // 10MB
+    'max_file_size' => PHP_INT_MAX,
 
     /*
      * This queue connection will be used to generate derived and responsive images.
@@ -59,8 +60,8 @@ return [
      *
      * This model is only used in Media Library Pro (https://medialibrary.pro)
      */
-    'temporary_upload_model' => Spatie\MediaLibraryPro\Models\TemporaryUpload::class,
-
+    // 'temporary_upload_model' => Spatie\MediaLibraryPro\Models\TemporaryUpload::class,
+    'temporary_upload_model' => null,
     /*
      * When enabled, Media Library Pro will only process temporary uploads that were uploaded
      * in the same session. You can opt to disable this for stateless usage of
@@ -80,9 +81,10 @@ return [
 
     /*
      * The class that contains the strategy for determining a media file's path.
+     * Use the trait getMediaPath() or property $media_path on your model to have model-specific paths, or create your own custom path generator and specify it here.
      */
-    'path_generator' => Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator::class,
-
+    // 'path_generator' => Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator::class,
+    'path_generator' => \App\Media\PathGenerators\CustomPathGenerator::class,
     /*
      * The class that contains the strategy for determining how to remove files.
      */
@@ -101,8 +103,8 @@ return [
      * When urls to files get generated, this class will be called. Use the default
      * if your files are stored locally above the site root or on s3.
      */
-    'url_generator' => Spatie\MediaLibrary\Support\UrlGenerator\DefaultUrlGenerator::class,
-
+    // 'url_generator' => Spatie\MediaLibrary\Support\UrlGenerator\DefaultUrlGenerator::class,
+    'url_generator' => \App\Media\UrlGenerators\CustomUrlGenerator::class,
     /*
      * Moves media on updating to keep path consistent. Enable it only with a custom
      * PathGenerator that uses, for example, the media UUID.
@@ -176,7 +178,7 @@ return [
      * The path where to store temporary files while performing image conversions.
      * If set to null, storage_path('media-library/temp') will be used.
      */
-    'temporary_directory_path' => null,
+    'temporary_directory_path' => storage_path('app/public/temp'),
 
     /*
      * The engine that should perform the image conversions.

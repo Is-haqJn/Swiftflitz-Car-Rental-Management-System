@@ -6,13 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //columns to be added
+        Schema::table('users', static function (Blueprint $table) {
+            // columns to be added
             $table->string('username')->unique()->after('name');
             $table->string('phone', 20)->nullable()->after('email');
             $table->string('profile_photo_path')->nullable()->after('phone');
@@ -22,20 +19,18 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('users', static function (Blueprint $table) {
+
+            // drop unique index on username before dropping the column
+            $table->dropUnique(['username']);
 
             $table->dropColumn('username');
             $table->dropColumn('phone');
-            $table->dropForeign('role_id');
             $table->dropColumn('profile_photo_path');
             $table->dropColumn('is_active');
             $table->dropColumn('last_login_at');
-            //
 
         });
     }

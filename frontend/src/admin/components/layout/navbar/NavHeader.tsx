@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useThemeContext } from '@adminContext/ThemeContext';
-import SwiftFlitzFaviconDark from '@adminAssets/swiftflitz-favicon.svg?react';
-import SwiftFlitzWhiteIcon from '@adminAssets/swiftflitz-white-logo.svg?react';
-import SwiftFlitzIcon from '@adminAssets/swiftflitz-dark-logo.svg?react';
+import SwiftFlitzFaviconDark from '@/shared/assets/swiftflitz-favicon.svg?react';
+import SwiftFlitzWhiteIcon from '@/shared/assets/swiftflitz-white-logo.svg?react';
+import SwiftFlitzIcon from '@/shared/assets/swiftflitz-dark-logo.svg?react';
+import { ROUTES } from '@/shared/routes';
 
 export function NavMenuToggle() {
     setTimeout(() => {
@@ -21,8 +22,8 @@ const NavHeader = () => {
     const { openMenuToggle, background } = useThemeContext();
     return (
         <div className="nav-header">
-            <Link to="/dashboard" className="brand-logo">
-                {/* Full logo — desktop only */}
+            <Link to={ROUTES.DASHBOARD.ROOT} className="brand-logo">
+                {/* Full logo - desktop only */}
                 <span className="brand-title">
                     {background!.value === 'dark' ? (
                         <SwiftFlitzWhiteIcon width={155} />
@@ -31,7 +32,7 @@ const NavHeader = () => {
                     )}
                 </span>
 
-                {/* Favicon / icon — mobile only */}
+                {/* Favicon / icon - mobile only */}
                 <span className="logo-abbr">
                     <SwiftFlitzFaviconDark width={30} />
                 </span>

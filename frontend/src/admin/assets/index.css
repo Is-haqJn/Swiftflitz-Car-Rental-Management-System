@@ -2,6 +2,17 @@
   content: none !important;
 }
 
+/* Branch selector - prevent overflow on small screens */
+@media (max-width: 576px) {
+  .nav-item .form-select.form-select-sm {
+    min-width: 0 !important;
+    max-width: 120px !important;
+    font-size: 0.75rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .nestable-list {
   padding-left: 0 !important;
 }
@@ -89,4 +100,196 @@
 
 .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content{
     border: 0 !important;
+}
+
+/* ── Select input consistent height (matches normal inputs at 2.9rem) ── */
+.form-select:not(.form-select-sm):not(.form-select-lg) {
+    height: 2.9rem;
+}
+
+/* ── Select inputs dark mode fix ── */
+[data-theme-version="dark"] .form-select {
+    background-color: #1e2746 !important;
+    color: #dee2e6 !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme-version="dark"] .form-select option {
+    background-color: #1e2746;
+    color: #dee2e6;
+}
+
+/* ── Header profile hover card always on top ── */
+.header-profile .profile-detail {
+    z-index: 9999 !important;
+}
+
+/* ── Header notification dropdown always on top ── */
+.header .notification_dropdown .dropdown-menu {
+    z-index: 9999 !important;
+}
+
+/* FilterBox dark mode */
+[data-theme-version="dark"] .sfz-filter-box {
+    background: #1e2746 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme-version="dark"] .sfz-filter-box-header {
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme-version="dark"] .sfz-filter-box-header .text-dark {
+    color: #dee2e6 !important;
+}
+
+/* Bootstrap plain card dark mode (pages not using FilterBox) */
+[data-theme-version="dark"] .card.sfz-filter-card {
+    background: #1e2746 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* RentalDetail dark mode overrides */
+[data-theme-version="dark"] .rental-detail-header {
+    background: #1e2746 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme-version="dark"] .rental-card-subheader {
+    background: #16213e !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme-version="dark"] .rental-tx-thead {
+    background: #16213e !important;
+}
+
+[data-theme-version="dark"] .rental-tx-row {
+    border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme-version="dark"] .rental-tx-amount {
+    color: #9ca3af !important;
+}
+
+[data-theme-version="dark"] .rental-tx-amount--paid {
+    color: #4ade80 !important;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spin {
+    animation: spin 0.8s linear infinite;
+}
+
+.table-padded > :not(caption) > * > * {
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* react-datepicker admin color overrides */
+.react-datepicker__header {
+    background-color: #126dff !important;
+    border-bottom: none !important;
+    padding-top: 12px !important;
+    padding-bottom: 8px !important;
+}
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+.react-datepicker__day-name {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.react-datepicker__navigation-icon::before {
+    border-color: #fff !important;
+}
+.react-datepicker__month-select,
+.react-datepicker__year-select {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 4px !important;
+    padding: 2px 4px !important;
+}
+.react-datepicker__month-select option,
+.react-datepicker__year-select option {
+    background: #fff !important;
+    color: #212529 !important;
+}
+.react-datepicker__day--selected,
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--keyboard-selected {
+    background-color: #126dff !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+}
+.react-datepicker__day:hover:not(.react-datepicker__day--selected):not(.react-datepicker__day--keyboard-selected):not(.react-datepicker__day--disabled) {
+    background-color: #e8f0ff !important;
+    border-radius: 50% !important;
+}
+[data-theme-version="dark"] .react-datepicker__header {
+    background-color: #126dff !important;
+}
+[data-theme-version="dark"] .react-datepicker,
+[data-theme-version="dark"] .react-datepicker__month {
+    background-color: #1e2139 !important;
+}
+[data-theme-version="dark"] .react-datepicker__day {
+    color: #e0e0e0 !important;
+}
+[data-theme-version="dark"] .react-datepicker__day:hover:not(.react-datepicker__day--selected):not(.react-datepicker__day--disabled) {
+    background-color: rgba(18, 109, 255, 0.2) !important;
+}
+
+/* Stat card big numbers - ensure visible in dark mode */
+[data-theme-version="dark"] .ic-chart-card .data-value,
+[data-theme-version="dark"] .ic-chart-card .data-value[class*="text-"] {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Report page stat card values - ensure visible in dark mode */
+[data-theme-version="dark"] .card .fs-5.fw-bold {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* SVG icons using currentColor - ensure propagation in dark mode dropdowns */
+[data-theme-version="dark"] .dropdown-item svg {
+    color: inherit;
+}
+
+/* Report card headers - override bg-white in dark mode */
+[data-theme-version="dark"] .card-header.bg-white {
+    background-color: var(--bs-card-bg, #1e2139) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Generic card body bg-white override for dark mode */
+[data-theme-version="dark"] .card.bg-white,
+[data-theme-version="dark"] .card-body.bg-white {
+    background-color: var(--bs-card-bg, #1e2139) !important;
+}
+
+/* Fix bg-white card headers - use actual admin dark theme color #151C2C */
+[data-theme-version="dark"] .card-header.bg-white {
+    background-color: #151C2C !important;
+    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+[data-theme-version="dark"] .card.bg-white,
+[data-theme-version="dark"] .card-body.bg-white {
+    background-color: #151C2C !important;
+}
+[data-theme-version="dark"] .card-header.bg-white * {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+[data-theme-version="dark"] .card-header.bg-white .text-muted {
+    color: rgba(255, 255, 255, 0.55) !important;
 }

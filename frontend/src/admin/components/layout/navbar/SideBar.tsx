@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useReducer, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 // import {MenuList} from "./Menu.js";
 import { useScrollPosition } from '@n8tb1t/use-scroll-position';
 import { useThemeContext } from '@adminContext/ThemeContext';
 import { Collapse } from 'react-bootstrap';
 import { sideBarItems } from '@adminConstants/sideBarItems';
+import { useFilteredMenu } from '@/admin/hooks/useFilteredMenu';
 
 type StateType = {
     active: string;
@@ -24,6 +25,10 @@ const initialState: StateType = {
     activeSubmenu: '',
 };
 
+function closeMenuIfOpen(): void {
+    document.querySelector('#main-wrapper')?.classList.remove('menu-toggle');
+}
+
 function SideBar() {
     const {
         iconHover,
@@ -34,6 +39,9 @@ function SideBar() {
     } = useThemeContext();
 
     const [state, setState] = useReducer(reducer, initialState);
+
+    //? filter menu based on user permissions
+    const filteredMenuItems = useFilteredMenu(sideBarItems);
 
     const [hideOnScroll, setHideOnScroll] = useState<number>(0);
     useScrollPosition(
@@ -59,17 +67,15 @@ function SideBar() {
     };
 
     /// Path
-    let path = window.location.pathname as string;
-    path = path.split('/').pop() as string;
-    path = path[path.length - 1];
+    const { pathname } = useLocation();
     useEffect(() => {
-        sideBarItems.forEach(data => {
+        filteredMenuItems.forEach(data => {
             data.content?.forEach(item => {
-                if (path === item.to) {
+                if (pathname === item.to) {
                     setState({ active: data.title });
                 }
                 item.content?.forEach(ele => {
-                    if (path === ele.to) {
+                    if (pathname === ele.to) {
                         setState({
                             activeSubmenu: item.title,
                             active: data.title,
@@ -78,7 +84,8 @@ function SideBar() {
                 });
             });
         });
-    }, [path]);
+    }, [pathname, filteredMenuItems]);
+
     return (
         <>
             <div
@@ -96,7 +103,7 @@ function SideBar() {
             >
                 <div className="ic-sidenav-scroll">
                     <ul className="metismenu" id="menu">
-                        {sideBarItems.map((data, index) => {
+                        {filteredMenuItems.map((data, index) => {
                             const menuClass = data.classChange;
                             if (menuClass === 'menu-title') {
                                 return (
@@ -110,7 +117,7 @@ function SideBar() {
                             } else {
                                 return (
                                     <li
-                                        className={` ${state.active === data.title ? 'mm-active' : ''} ${data.to === path ? 'mm-active' : ''} ${data?.className}`}
+                                        className={` ${state.active === data.title ? 'mm-active' : ''} ${data.to === pathname ? 'mm-active' : ''} ${data?.className}`}
                                         key={index}
                                     >
                                         {data.content &&
@@ -169,7 +176,7 @@ function SideBar() {
                                                                                             pathname:
                                                                                                 data.to,
                                                                                         }}
-                                                                                        className={` ${data.hasMenu ? 'has-arrow' : ''} ${data.to === path ? 'mm-active' : ''} `}
+                                                                                        className={` ${data.hasMenu ? 'has-arrow' : ''} ${data.to === pathname ? 'mm-active' : ''} `}
                                                                                         onClick={() => {
                                                                                             handleSubmenuActive(
                                                                                                 data.title
@@ -203,11 +210,14 @@ function SideBar() {
                                                                                                             >
                                                                                                                 <li>
                                                                                                                     <Link
-                                                                                                                        className={`${path === data.to ? 'mm-active' : ''}`}
+                                                                                                                        className={`${pathname === data.to ? 'mm-active' : ''}`}
                                                                                                                         to={{
                                                                                                                             pathname:
                                                                                                                                 data.to,
                                                                                                                         }}
+                                                                                                                        onClick={
+                                                                                                                            closeMenuIfOpen
+                                                                                                                        }
                                                                                                                     >
                                                                                                                         {
                                                                                                                             data.title
@@ -227,7 +237,10 @@ function SideBar() {
                                                                                         pathname:
                                                                                             data.to,
                                                                                     }}
-                                                                                    className={`${data.to === path ? 'mm-active' : ''}`}
+                                                                                    className={`${data.to === pathname ? 'mm-active' : ''}`}
+                                                                                    onClick={
+                                                                                        closeMenuIfOpen
+                                                                                    }
                                                                                 >
                                                                                     {' '}
                                                                                     {
@@ -243,7 +256,10 @@ function SideBar() {
                                                 </Collapse>
                                             </>
                                         ) : (
-                                            <Link to={{ pathname: data.to }}>
+                                            <Link
+                                                to={{ pathname: data.to }}
+                                                onClick={closeMenuIfOpen}
+                                            >
                                                 {' '}
                                                 {data.iconStyle}{' '}
                                                 <span className="nav-text">

@@ -1,0 +1,1277 @@
+.header-style-1{
+    position: relative; 
+    &.hdr-transparent.site-header{
+        position: absolute;
+        .is-fixed{
+            .header-middle{
+                max-width: 100%;
+                padding: 0px 90px;
+                @include breakpoint-1599{
+                    padding: 0px 30px;
+                }
+            }
+            .main-bar.color-fill {
+                background-color:$s-bg-black;
+            }
+        }
+    }
+    &.light-hdr{
+        position: relative;
+        .main-bar{
+            background-color:$s-bg-light;
+        }
+        .is-fixed{
+            .header-middle{
+                max-width: 100%;
+                padding: 0px 90px;
+                @include breakpoint-1599{
+                    padding: 0px 30px;  
+                }
+            }
+            .main-bar.color-fill {
+                background-color:$s-bg-white;
+                border-bottom: 1px solid #ececec;
+                border-radius: 0px;
+            }
+        }
+
+        .header-nav {
+            .nav>li {
+                position: relative;
+                // margin: 0px 0px;
+                // padding: 10px 0px;
+                font-family: $font-type;    
+                &>a {
+                    color: $s-text-dark;
+                }
+    
+                &.active>a,
+                &.current-menu-item>a {
+                    background-color: transparent;
+                    color: $s-text-black;
+                }               
+
+                &:hover>a {
+                    color: $s-clr-primary;
+                }
+
+                .sub-menu {
+                    background-color: $s-bg-light;
+                    li {
+                        border-bottom: 1px solid #ececec;
+                        a {
+                            color:$s-text-black;
+                            &:hover {
+                                color: $s-text-black;
+                                }
+                        }
+                        &:hover>a {
+                            color: $s-clr-primary;
+                        }
+
+                        .fa {
+                            color: $s-text-black;
+                        }
+                    }
+                }
+
+
+            }
+        }
+        .wt-topbar-left-info{
+            li{ 
+                a{
+                    color: $s-text-dark;
+                    span{
+                        i{
+                            color: $s-text-white;
+                        }
+                    }
+                }
+            }
+         
+        }
+        .navbar-toggler {
+            .icon-bar {
+                background:$s-bg-dark;
+            }
+        }
+    }
+
+    &.with-logo-bg-strip{
+        overflow: hidden;
+        .logo-header{
+            position: relative;
+            z-index: 1;
+            &:after{
+                background-color: $s-clr-primary;
+                content: "";
+                left: auto;
+                top: -20px;
+                bottom: -20px;
+                right: -20px;
+                position: absolute;
+                z-index: -1;
+                width: 1500px;
+                @include breakpoint-1199{
+                    bottom: -4px;
+                    top: -4px;
+                }
+                @include breakpoint-480{
+                    bottom: 0px;
+                    top:0px;
+                }
+            }
+        }
+        .main-bar{
+            background-color:$s-bg-white;
+        }
+        .is-fixed{
+            .main-bar.color-fill {
+                background-color:$s-bg-white;
+                border-bottom: 1px solid #ececec;
+                border-radius: 0px;
+            }
+        }
+    }
+    &.top-bar-style-2{
+        .top-bar.site-bg-dark{
+            background-color: $s-bg-dark;
+        }
+        .wt-topbar-left{
+            position: relative;
+            z-index: 1;
+            &:before{
+                content: '';
+                background-color: $s-clr-primary;
+                position: absolute;
+                right: -160px;
+                z-index: -1;
+                top: 0px;
+                bottom: 0px;
+                width: 3000px;
+                transform: skew(-15deg);
+                box-shadow: 3px 0px #98abee;
+                @include breakpoint-1199{
+                    right: -60px;
+                }
+            }
+            .wt-topbar-left-info{
+                li{
+                    border-right-color: $s-bg-white;
+                    a{
+                        color: $s-text-white;
+                    }
+                }
+                
+            }
+
+        }
+        
+    }
+    .top-bar{
+        overflow: hidden;
+        min-height: 56px;
+        align-items: center;
+        display: flex;
+        @include breakpoint-991{
+            min-height: auto;
+        }
+        .top-bar-wrap{
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            @include breakpoint-991{
+                display: none;
+            }
+        }
+        .container{
+            position: relative;
+            z-index: 1;
+            
+        }
+        .wt-topbar-right-info{
+             p{
+                margin-bottom: 0px;
+                i{
+                    margin-right: 5px;
+                }
+             }
+        }
+        
+    }
+    .container{
+        @include breakpoint-991{
+            max-width: 100%;
+        }
+    }
+    
+    .header-middle{
+        padding: 0px 0px;
+        position: relative;
+        width: 100%;
+        padding-top: 0px;
+        padding-bottom: 0px;
+       
+    }
+    .wt-topbar-left-info{
+        margin: 0px;
+        display: flex;
+        align-items: center;
+        list-style: none;
+        li{ 
+            padding-right: 20px;
+            margin-right: 20px;
+            @include breakpoint-1440{
+                padding-right: 10px;
+                margin-right: 10px;
+            }
+            &:last-child{
+                padding-right: 0px;
+                margin-right: 0px;
+
+            }
+            @include breakpoint-1365{
+                &:last-child{
+                    display: none;
+                }
+            }
+            a{
+                list-style: none;
+                display: block;
+                position: relative;
+                color: $s-text-white;
+                font-size: 18px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                @include breakpoint-1199{
+                    font-size: 16px;
+                }
+                span{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 10px 10px 0px 10px;
+                    height: 50px;
+                    width: 50px;
+                    background-color: $s-clr-primary;
+                    font-size: 24px;
+                    margin-right: 10px;
+                    @include breakpoint-1440{
+                        height: 40px;
+                        width: 40px;
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+     
+    }
+    .header-info-wraper{
+        display: flex;
+        align-items: center;
+        @include breakpoint-991{
+            position: absolute;
+            right:20px;
+            .site-button{
+                display: none;
+            }
+        }
+    }
+    .header-bottom{
+        .navigation-bar{
+            display: flex;
+            align-items: center;
+        }
+    }
+    .header-info{
+        margin-right: 60px;
+        @include breakpoint-991{
+            margin-right: 0px;
+        }
+        ul{
+            display: flex;
+            align-items: center;
+            margin: 0px;
+            list-style: none;
+            li{
+                margin-left: 30px;
+                display: flex;
+                align-items: center;
+                @include breakpoint-400{
+                    margin-left: 10px;
+                }
+                &:last-child{
+                    border-left: 1px solid #ddd;
+                    padding-left: 30px;
+                    @include breakpoint-767{
+                        display: none;
+                    }
+                }
+                .twm-icon-box-wraper{
+                    display: flex;
+                    align-items: center;
+                    .twm-icon-box{
+                        min-width: 40px;
+                        width: 40px;
+                        margin-right: 20px;
+                        position: relative;
+                        z-index: 1;
+                        @include breakpoint-991{
+                            min-width: 24px;
+                            width: 24px;
+                        }
+                        &:after{
+                            content: '';
+                            position: absolute;
+                            left: 0px;
+                            top: 0px;
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            background-color: $s-clr-primary;
+                            opacity: 0.3;
+                            z-index: -1;
+                        }
+                    }
+                    .twm-icon-box-content{
+                        .twm-tilte{
+                            font-size: 16px;
+                            font-weight: 700;
+                            margin-bottom: 0px;
+                            @include breakpoint-991{
+                                margin-bottom: 0px;
+                                font-size: 14px;
+                            }
+                        }
+                        p{
+                            margin-bottom: 8px;
+                            @include breakpoint-991{
+                                margin-bottom: 0px;
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                } 
+             
+            }
+            
+        }
+    }
+
+    .header-nav-btn-section{
+        float: right;
+        display: flex;
+        .twm-nav-btn-left{
+            margin-right: 10px;
+            .twm-nav-sign-up{
+                background-color: #e0eeff;
+                color: $s-clr-primary;
+                font-size: 16px;
+                border-radius: 10px;
+                padding: 8px 15px;
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                position: relative;
+                z-index: 0;
+                &:before{
+                    width: 0%;
+                    height: 100%;
+                    position: absolute;
+                    right:100%;
+                    bottom: 0px;
+                    content: "";
+                    background-color: #3898e2;
+                    opacity: 0.1;
+                    z-index: -1;
+                    transition: 0.5s all ease;
+                }
+                @include breakpoint-575{
+                    padding: 6px 12px;
+                    font-size: 14px;
+                }
+                @include breakpoint-1360{
+                    font-size: 0px;
+                }
+                i{
+                    padding-right: 5px;
+                    @include breakpoint-1360{
+                        font-size: 16px;
+                        padding-right: 0px;
+                    }
+                }
+                &:hover{
+                    &:before{
+                        width: 100%;
+                        right:0%;
+                        opacity: 0.1;
+                    }
+                }
+            }
+        }
+        .twm-nav-btn-right{
+            margin-right: 10px;
+            .twm-nav-post-a-job{
+                background-color: $s-clr-primary;
+                color: $s-clr-primary;
+                font-size: 16px;
+                border-radius: 10px;
+                padding: 8px 15px;
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                position: relative;
+                z-index: 1;
+                &:before{
+                    width: 0%;
+                    height: 100%;
+                    position: absolute;
+                    right:100%;
+                    bottom: 0px;
+                    content: "";
+                    background-color: $s-text-dark;
+                    opacity: 0.1;
+                    z-index: -1;
+                    transition: 0.5s all ease;
+                }
+                @include breakpoint-575{
+                    padding: 6px 12px;
+                    font-size: 14px;
+                }
+                @include breakpoint-1360{
+                    font-size: 0px;
+                }
+                i{
+                    padding-right: 5px;
+                    @include breakpoint-1360{
+                        font-size: 16px;
+                        padding-right: 0px;
+                    }
+                }
+                &:hover{
+                    &:before{
+                        width: 100%;
+                        right:0%;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .header-search{
+        a.header-search-icon{
+            color: $s-text-white;
+            width: 46px;
+            height: 46px;
+            line-height: 54px;
+            display: block;
+            text-align: center;
+            font-size: 20px;
+            font-weight: normal;
+            border-radius: 50%;
+            @include breakpoint-600{
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+            }
+        }
+    }
+    .extra-nav {
+        /*---Extra Nav---*/
+        display: table;
+        float: right;
+        height: 70px;
+        position: relative;
+        z-index: 13;
+        @include breakpoint-991{
+            margin-right: 26px;
+        }
+        @include breakpoint-575{
+            margin-right: 10px;
+        }
+        @include breakpoint-480{
+            display: none;
+        }
+        .extra-cell {
+            display: table-cell;
+            padding-left: 25px;
+            vertical-align: middle;
+            &:first-child{padding-left: 0px;}
+            @include breakpoint-600{
+                padding-left:0px;
+            }
+            .header-btn{
+                margin-right: 10px;
+                @include breakpoint-540{
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .logo-header {
+        /*--logo for header---*/
+        width: 190px;
+        padding: 0px;
+        font-size: 36px;
+        color:$s-text-black;
+        margin: 0px;
+        position: relative;
+        z-index: 11;
+        @include breakpoint-1199{
+            width: 130px;  
+        }
+        @include breakpoint-400{
+            width: 150px;  
+        }
+        .logo-header-inner {
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+    }
+
+    &.site-header {
+        position: relative;
+        width: 100%;
+        left: 0px;
+        top: 0px;
+        z-index: 999;
+        ul,ol {margin-bottom: 0px;}
+    }  
+    .main-bar {
+    /*--main-bar--*/
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .navbar-toggler {
+    /*--Navbar Toggler---*/
+        border: none;
+        margin:24px 0px 24px 15px;
+        padding: 12px 10px;
+        @include breakpoint-540{
+            margin-left: 0px;
+        }
+        &:focus{
+            box-shadow: none !important;
+        }
+        @include breakpoint_991 {
+            display: block;
+            margin-top: 14px;
+            margin-bottom: 14px;
+            float: right;
+            outline: none !important;
+        }
+        .icon-bar {
+            background:$s-bg-white;
+            height: 3px;
+            border-radius: 0px;
+            display: block;
+            width: 22px;
+        }
+        .icon-bar {
+            + {
+                .icon-bar {
+                    margin-top: 4px;
+                }
+            }
+        }   
+        @include breakpoint-991{        
+            margin-top: 14px; 
+            margin-bottom: 14px;      
+        }
+    }
+
+    /*--is fixed---*/
+    .is-fixed{
+
+        &.mobile-sider-drawer-menu{ 
+            .header-nav {
+                .nav {
+                    height: 100vh !important;
+                    width: 100%;
+                    >li {
+                        >a {
+                            padding: 12px 15px !important;
+                        }
+                    }
+                }
+            }
+
+        }
+      
+    }    
+
+    .header-nav {
+        position: relative;
+        padding: 0px;
+        z-index: 10;
+            @include breakpoint-991{
+                clear: both;
+                margin: 0px -15px;
+                border-bottom: 1px solid #E9E9E9;
+                &.navbar-collapse{
+                    align-items: start;
+                }
+            }    
+            .nav {
+                display: flex;
+                justify-content: flex-end; 
+                flex-direction: inherit;
+                @include breakpoint-991{
+                    float: none;
+                    margin: 0px;
+                    background:$s-text-white;
+                    display: block;
+                    width: 100%;
+                    left: 0px;
+                }
+                li {
+                    @include breakpoint-991{
+                        float: none;
+                    }                   
+                    i {
+                        font-size: 9px;
+                        margin-left: 3px;
+                        margin-top: -3px;
+                        vertical-align: middle;
+                        opacity: 0.7;
+                        @include breakpoint-991{
+                            float: right;                       
+                        }
+                    }
+                    
+                    
+                }
+                    
+            }
+
+            .nav>li {
+                position: relative;
+                margin: 0px 0px;
+                padding: 0px;
+                font-family: $font-type;    
+                ul{
+                    @include breakpoint-991{
+                    display: none;
+                    position: static;
+                    visibility: visible;
+                    width: auto;
+                    background: #f9f9f9;
+                    }
+                } 
+
+                &>a {
+                    color: $s-text-white;
+                    font-family: $font-type;
+                    font-size: 18px;
+                    padding: 35px 20px;
+                    cursor: pointer;
+                    margin: 0px 0px;
+                    font-weight: 500;
+                    display: block;
+                    @include breakpoint-1440{
+                        padding: 35px 15px;
+                    }
+
+                    @include breakpoint-1199{
+                        padding: 12px 10px;
+                        font-size: 14px;
+                    }
+                    &:hover{
+                        background-color: transparent;
+                        color:$s-clr-primary;
+                    }
+                    &:active,
+                    &:focus {
+                        background-color: transparent;
+                    }
+                        
+                }
+               
+                &.active>a,
+                &.current-menu-item>a {
+                    @include breakpoint-991{
+                        color: $s-text-black;
+                    }
+                } 
+
+                &>a:hover,
+                &>a:active,
+                &>a:focus{
+                    @include breakpoint-991{
+                        background-color: #f0f0f0;
+                        text-decoration: none;
+                    }
+                } 
+
+                &.active>a,
+                &.current-menu-item>a {
+                    background-color: transparent;
+                    color: $s-text-black;
+                }               
+
+                &:hover>a {
+                    color: $s-clr-primary;
+                }
+
+                &:hover>.sub-menu{
+                    opacity: 1;
+                    visibility: visible;
+                    margin-top: 0px;
+                    transition: all 0.3s ease;
+                }
+
+                .sub-menu {
+                    background-color: $s-text-white;
+                    display: block;
+                    left: 0px;
+                    top: 100%;
+                    list-style: none;
+                    margin: 20px 0 0;
+                    opacity: 0;
+                    padding: 0px;
+                    position: absolute;
+                    visibility: hidden;
+                    width: 220px;
+                    z-index: 10;
+                   
+
+                    @include breakpoint-991{
+                        display: none;
+                        position: static;
+                        visibility: visible;
+                        width: auto;
+                        background: #f9f9f9;
+                        opacity: 1;
+                        margin: 0px !important;
+                    }
+                    li {
+                        border-bottom: 1px solid #f4f4f4;
+                        position: relative;
+                        text-transform: none;
+                        a {
+                            font-family: $font-type;
+                            color:$s-text-black;
+                            display: block;
+                            font-size: 13px;
+                            padding: 11px 20px;
+                            padding-left: 20px;
+                            font-weight: 500;
+                            &:hover {
+                                color: $s-text-black;
+                                text-decoration: none;
+                            }
+                        }
+                        &:hover>a {
+                            color: $s-clr-primary;
+                        }
+                        &:last-child {
+                            border-bottom: 0px;
+                        }    
+                        .fa {
+                            color: $s-text-black;
+                            display: block;
+                            float: right;
+                            position: absolute;
+                            right: 10px;
+                            top: 6px;
+                            z-index: -1;
+                        }
+                    }
+
+                    li{
+                        &.has-child.nav-active{
+                            &> a{
+                                color:$s-clr-primary;
+                            }
+                        }
+                        >.sub-menu {
+                            left: 220px;
+                            margin: 0px 0px 0px 20px;
+                            transition: all 0.1s ease;
+    
+                            &>li{
+                                @include breakpoint-991{
+                                    float: none;
+                                    display: block;
+                                    width: auto;
+                                    margin-left: 20px;
+                                }
+                               
+                                a {
+                                    @include breakpoint-991{
+                                        padding-left: 30px;
+                                    }
+                                }
+                            } 
+                        } 
+                    }
+                    li{
+                        &:hover{
+                            >.sub-menu {
+                                left: 220px;
+                                margin: 0px;
+                                opacity: 1;
+                                top: -1px;
+                                visibility: visible;
+                                &:before {
+                                    background-color: transparent;
+                                    bottom: 0px;
+                                    content: '';
+                                    display: block;
+                                    height: 100%;
+                                    left: -6px;
+                                    position: absolute;
+                                    top: 0px;
+                                    width: 6px;
+                                }                
+
+                            }
+                        }
+                    } 
+
+                    @include breakpoint-991{
+                       li {
+                            .fa{
+                                z-index: 1;
+                                top: 4px;
+                                width: 100%;
+                                padding: 10px;
+                                text-align: right;
+                            }
+                        }
+                       li > a:hover + .fa {
+                            z-index: 0;
+                        }
+                    }
+
+                }
+
+                &:first-child a{
+                    padding-left: 0px;
+                    @include breakpoint-991{
+                        padding-left: 12px;
+                    }
+                }
+                &:last-child a{
+                    padding-right: 0px;
+                }
+
+            }
+
+            /*-- Submenu direction---*/                         
+            .submenu-direction {
+                .sub-menu {
+                    left: auto;
+                    right: 0px;
+                    li {
+                        >.sub-menu {
+                            left: auto;
+                            right: 220px;
+                            margin: 0px 20px 0px 0px;
+                        }
+                        &:hover {
+                            >.sub-menu {
+                                left: auto;
+                                right: 220px;
+                                margin: 0px 0px 0px 0px;
+                            }
+                        }
+                    }
+                }
+            }                
+
+        
+            &.nav-animation {
+                .nav {
+                    >li {
+                        >ul.sub-menu {
+                            li {
+                                >a {
+                                    transition: all 0.5s ease-out;
+                                    position: relative;
+                                    z-index: 1;
+                                    border-left: 6px solid transparent;
+                                    @include breakpoint-991{
+                                        z-index: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            &.nav-animation {
+                .nav {
+                    >li {
+                        &:hover {
+                            >ul.sub-menu {
+                                li {
+                                    &:hover {
+                                        >a {
+                                            padding-left: 20px;
+                                            border-left: 6px solid $s-clr-primary;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+    }
+
+
+    .has-child{ 
+        @include breakpoint-991{
+            position: relative;  
+        }
+        .submenu-toogle {
+            position: absolute;
+            right: 4px;
+            top: 8px;
+            left: 0px;
+            color: $s-text-black;
+            background-color: transparent;
+            z-index: 900;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 14px;
+            display: none;
+            @include breakpoint-991{
+                display: block;
+                width: 100%;
+                text-align: right;
+                
+            }
+        }
+        li{
+            .submenu-toogle {
+                opacity: 0.9;
+            }
+        }
+
+        &.nav-active {
+            >a {
+                + {
+                    .submenu-toogle.glyphicon-chevron-right {
+                        &:before {
+                            content: "\e114";
+                        }
+                    }
+                }
+            }
+        }
+
+        &.nav-active {
+            >a {
+                + {
+                    .submenu-toogle.glyphicon-plus {
+                        &::before {
+                            content: "\2212";
+                        }
+                    }
+                }
+            }
+        }
+
+        &.nav-active {
+            >a {
+                + {
+                    .submenu-toogle.fa.fa-angle-right {
+                        &::before {
+                            @include breakpoint-991{
+                                content: "\f107";
+                            }
+                        }
+                    }
+                }
+            }
+        }          
+
+    }         
+    
+    @include breakpoint_991{
+        .mobile-full-width-menu{
+            .header-nav{
+                .nav {
+                    position: inherit;
+                }
+            }
+        }
+    }
+    /*====Mobile Side =======*/
+    @include breakpoint_991 {
+        
+        &.mobile-sider-drawer-menu{
+            .header-nav {
+                position:fixed;
+                width:250px !important;
+                z-index:999;
+                height:100vh !important;
+                overflow-y: inherit !important;
+                left:-250px;
+                top:0px;
+                transition: all 0.5s linear;	
+                background-color:$s-text-white;	
+                .nav{ 
+                    > li{
+                        &:hover{
+                            > .sub-menu{
+                            animation:none !important
+                            }
+                        }
+                    }
+                }
+                .nav {
+                    >li {
+                        .sub-menu {
+                            transition: none !important;
+                            li {
+                                &:hover {
+                                    >.sub-menu {
+                                        animation: none !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }                
+            }
+
+            &.active {
+                .header-nav {
+                    left: 14px;
+                }
+            }
+
+            .icon-bar{
+                transition: all 0.5s linear;
+                position: relative;		
+            } 
+
+            #mobile-side-drawer{min-height:41px; position: relative;}
+
+            &.active {
+                .icon-bar.icon-bar-first {
+                    transform: rotate(45deg) translateX(3px) translateY(2px);
+                }
+            }
+
+            &.active {
+                .icon-bar.icon-bar-three {
+                    transform: rotate(-45deg) translateX(3px) translateY(-2px);
+                }
+            }
+
+            .icon-bar.icon-bar-two{
+                position:relative;
+                right:0%;
+            }
+            &.active {
+                .icon-bar.icon-bar-two {
+                    position: absolute;
+                    right: 100px;
+                    opacity: 0;
+                }
+            }
+
+            .is-fixed {
+                .header-nav {
+                    .nav {
+                        overflow: auto;
+                        max-height: 100%;
+                    }
+                }
+            }
+            .header-fixed {
+                .header-nav {
+                    .nav {
+                        overflow: auto;
+                        max-height: 100%;
+                    }
+                }
+            }
+
+        }
+
+    } 
+    
+    
+    /*---when header is sticky---*/
+    .sticky-no {
+        .header-middle {
+            position: static !important;
+            
+        }
+    }
+    /*---when header is sticky---*/
+    .is-fixed {
+        .header-middle {
+            position: fixed;
+            max-width: 1274px;
+            padding: 0px 20px;
+            left: 0px;
+            top: 0px;
+            right: 0px;
+        }
+    }
+    
+
+    /*---header id Fixed---*/
+
+    .is-fixed{
+        .main-bar.color-fill {
+            background-color: $s-text-white;
+        }
+    }
+
+    @include breakpoint_991  {
+        .header-nav {
+            .nav {
+                >li {
+                    margin: 0px;
+                    padding: 0px;
+                    border-bottom: 1px solid #ddd;
+                    >a {
+                        margin: 0px;
+                        padding: 10px 12px;
+                        font-size: 15px;
+                        color: $s-text-black;
+                        
+                    }
+                }
+            }
+        }
+        .is-fixed{
+
+            .color-fill {
+                .header-nav {
+                    .nav {
+                        >li {
+                            margin: 0px;
+                            padding: 0px;
+                        }
+                    }
+                }
+            }
+        }
+    
+    }
+
+    
+    &.no-fixed{
+        position: relative;
+    }
+
+}
+
+
+
+
+
+.main-bar {
+	width: 100%;
+	transition: all .3s cubic-bezier(.39,.575,.565,1) 0s;
+}
+.color-fill.main-bar {
+	position: fixed;
+	top: 0%;
+}
+
+/*Header Light==============================================================*/
+.light-view{
+    .header-style-1{
+        background-color: $s-bg-white;
+        &.hdr-transparent.site-header{
+            background-color: rgba(255,255,255,0.7)
+        }
+        .top-bar{
+            background-color: $s-bg-light;
+            .wt-topbar-left-info{
+                li{ 
+                    a{
+                        color: $s-text-dark;
+                    }
+                }
+            }
+            .wt-topbar-right-info{
+                p{
+                   color:$s-text-dark;
+                   i{
+                       margin-right: 5px;
+                   }
+                }
+           }
+
+        }
+
+        &.top-bar-style-2{
+            .top-bar.site-bg-dark{
+                background-color: $s-bg-dark;
+                .wt-topbar-right-info {
+                    p {
+                        color: $s-text-white;
+                    }
+                }
+            }
+            .wt-topbar-left{
+                .wt-topbar-left-info{
+                    li{
+                        border-right-color: $s-bg-white;
+                        a{
+                            color: $s-text-white;
+                        }
+                    }
+                    
+                }
+
+            }
+            
+        }
+
+
+        .header-nav{
+            .nav>li {
+                &>a {
+                    color: $s-text-dark;
+                }
+            }
+        }
+        .header-search{
+            a.header-search-icon{
+                color: $s-text-dark;
+            }
+        }
+
+         /*---header id Fixed---*/
+
+        .is-fixed{
+            .main-bar.color-fill {
+                background-color: #efefef;
+                border-radius:10px;
+            }
+        }
+        .navbar-toggler{
+            .icon-bar {
+                background: $s-bg-dark;
+              }
+        } 
+        
+    }
+}
+
+
